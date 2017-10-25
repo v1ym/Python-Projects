@@ -1,11 +1,9 @@
-#my own personal toolbox library that i can take around with me
-#to make writing other scripts easier
-#it's a toolbox... that's it.
-
+#my own personal toolbox library that i can take around with me.
+#it's a toolbox.
 from random import randint
 import os
 
-#tool for creating list of random filenames for testing on other projects
+#for creating list of random filenames for testing on other projects
 def random_filename_generator():
     filetype = "." + raw_input("Enter file type>> ")
     namelength = input("How long are the names?>> ")
@@ -43,4 +41,24 @@ def random_filename_generator():
     print ""
     print "done"
 
-random_filename_generator()
+#import settings from other txt or ini file
+def import_settings(filepath):
+    f = open(filepath, 'r')
+    filecontent = f.readlines()
+    f.close()
+
+    #read the settings.ini file
+    data = []
+    for i in filecontent:
+        string = i[:-1]
+        data.append(string.split(':'))
+
+    #create a dict for all the settings to go into
+    global settings
+    settings = {}
+    for i in data:
+        settings.update({i[0]:i[1]})
+
+    #convert all key values from strings to floats
+    for i in settings:
+        settings[i] = float(settings[i])
